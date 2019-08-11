@@ -2,7 +2,7 @@
     display: flex;
     height: 100vh;
 
-    background: aquamarine;
+    background: #ededed;
 }
 
 .dialog {
@@ -14,7 +14,7 @@
     margin-bottom: 10px;
 }
 
-.dialog-content h1 {
+.dialog-title {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -28,13 +28,28 @@
 .dialog-action {
     flex: 1;
     padding: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    user-select: none;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    a {
+        text-decoration: none;
+        display: block;
+
+        color: black;
+    }
 }
 
-.dialog-action a {
-    text-decoration: none;
-    display: block;
+.dialog-action.link {
+    padding: 0;
 
-    color: black;
+    a {
+        padding: 5px;
+    }
 }
 
 #nickname-form {

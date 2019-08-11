@@ -1,18 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
-import { UserContext } from './context';
+import { UserProvider } from 'context/UserContext';
+import { LobbyProvider } from 'context/LobbyContext';
 
-import { Home, Play } from './views';
+import { Home, Lobby } from 'views';
 
 import './App.css';
 
 function App() {
     return (
         <Router>
-            <Route exact path='/' component={Home} />
-            <Route path='/play' component={Play} />
+            <UserProvider>
+                <LobbyProvider>
+                    <Route exact path='/' component={Home} />
+                    <Route path='/lobby' component={Lobby} />
+                </LobbyProvider>
+            </UserProvider>
         </Router>
     );
 }

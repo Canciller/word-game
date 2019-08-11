@@ -1,23 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './Home.css';
+import { UserConsumer } from 'context/UserContext';
+
+import './Home.scss';
 
 function Home() {
     return (
-        <div className='container'>
+        <div
+            id='Home'
+            className='container'
+        >
             <div className='dialog'>
                 <div className='dialog-content'>
-                    <h1>
+                    <h1 className='dialog-title'>
                         Choose a nickname to start playing!
                     </h1>
                     <div id='nickname-form'>
-                        <input placeholder='Nickname' type='text'/>
+                        <UserConsumer>
+                            { user => (
+                                <input
+                                    onChange={e => user.name = e.target.value}
+                                    type='text'
+                                    placeholder={user.name}
+                                />
+                            )}
+                        </UserConsumer>
                     </div>
                 </div>
                 <div className='dialog-actions'>
-                    <button className='dialog-action'>
-                        <Link to='/play'>
+                    <button className='dialog-action link'>
+                        <Link to='/lobby'>
                             Play
                         </Link>
                     </button>

@@ -1,4 +1,4 @@
 import Home from './Home';
-import Play from './Play';
+import Lobby from './Lobby';
 
-export { Play, Home };
+export { Lobby, Home };
