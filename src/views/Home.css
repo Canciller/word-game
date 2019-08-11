@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    height: 100vh;
+
+    background: aquamarine;
+}
+
+.dialog {
+    margin: auto;
+    max-width: 330px;
+}
+
+.dialog-content {
+    margin-bottom: 10px;
+}
+
+.dialog-content h1 {
+    text-align: center;
+}
+
+.dialog-actions {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dialog-action {
+    flex: 1;
+}
+
+#nickname-form {
+    display: flex;
+    position: relative;
+    align-items: baseline;
+}
+
+#nickname-form input {
+    flex: 1;
+    padding: 5px;
+}
+
+button {
+    padding: 0;
+}
+
+button a {
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+
+    color: black;
+}
