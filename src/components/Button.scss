@@ -6,16 +6,27 @@
     text-align: center;
     text-decoration: none;
     border: none;
-    cursor: pointer; // TODO: Add browser prefixes to cursor
-    user-select: none; // TODO: Add browser prefixes to user-select
 
-    font-size: 18px; // TODO: Create font-size variable for Button
+    // TODO: Add browser prefixes to cursor
+    cursor: pointer;
 
-    padding: 8px; // TODO: Define global padding for controls
-    border-radius: 2px; // TODO: Define global border-radius
+    // TODO: Add browser prefixes to user-select
+    user-select: none;
 
-    background: #ededed; // TODO: Create #ededed variable
-    color: #4a4a4a; // TODO: Create #4a4a4a variable
+    // TODO: Create font-size variable for Button
+    font-size: 18px;
+
+    // TODO: Define global padding for controls
+    padding: 8px;
+
+    // TODO: Define global border-radius
+    border-radius: 2px;
+
+    // TODO: Create #ededed variable
+    background: #ededed;
+
+    // TODO: Create #4a4a4a variable
+    color: #4a4a4a;
 }
 
 .Button-success {
