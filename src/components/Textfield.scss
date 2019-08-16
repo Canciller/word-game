@@ -1,0 +1,29 @@
+// TODO: Replace contants for variables
+// TODO: Define hover, focus, etc
+
+.Textfield {
+    display: flex;
+    position: relative;
+}
+
+.Textfield-label {
+    position: absolute;
+    user-select: none; // TODO: Add browser prefixes to user-select
+    top: -8px;
+    left: 5px;
+
+    font-size: 11px; // TODO: Create font-size variable for Textfield-label
+    color: #4a4a4a; // TODO: Create #4a4a4a variable
+}
+
+.Textfield-input {
+    flex: 1;
+
+    padding: 8px; // TODO: Define global padding for controls
+
+    // TODO: Create border variables for Textfield-input
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: #ededed;
+    border-style: solid;
+}

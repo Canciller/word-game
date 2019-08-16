@@ -1,0 +1,35 @@
+// TODO: Replace constants for variables
+// TODO: Define hover, focus, etc
+
+.Button {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer; // TODO: Add browser prefixes to cursor
+    user-select: none; // TODO: Add browser prefixes to user-select
+
+    font-size: 18px; // TODO: Create font-size variable for Button
+
+    padding: 8px; // TODO: Define global padding for controls
+    border-radius: 2px; // TODO: Define global border-radius
+
+    background: #ededed; // TODO: Create #ededed variable
+    color: #4a4a4a; // TODO: Create #4a4a4a variable
+}
+
+.Button-success {
+    background: #8ef2a8;
+}
+
+.Button-warning {
+    // TODO: Define background for Button-warning
+}
+
+.Button-error {
+    background: #f68585;
+}
+
+.Button-fullWidth {
+    width: 100%;
+}

@@ -1,16 +1,10 @@
-import OpenSocket from 'socket.io-client';
-
-import config from 'config';
+import User from './User';
 
 class Lobby
 {
-    constructor(name, password, id) {
-        Lobby.defaultName = 'untitled';
-        Lobby.currentId = 0;
-
-        this._name = name || Lobby.defaultName;
+    constructor(name, password) {
+        this._name = name;
         this._password = password;
-        this._id = id || Lobby.getNewId();
     }
 
     get name () {
@@ -19,16 +13,6 @@ class Lobby
 
     set name (name) {
         this._name = name;
-        if(this._name === undefined || this._name === '')
-            this._name = Lobby.defaultName;
-    }
-
-    get id () {
-        return this._id;
-    }
-
-    set id (id) {
-        this._id = id;
     }
 
     get password () {
@@ -39,19 +23,20 @@ class Lobby
         this._password = password;
     }
 
-    create(name, password) {
-        this.name = name;
-        this.password = password;
+    toJSON() {
+        let { _name, _password } = this;
+        return {
+            name: _name,
+            password: _password
+        }
+    }
 
-        this.connect();
+    create() {
+        User.socket.emit('lobby:create', this.toJSON());
     }
 
     connect() {
-        let socket = this._socket = OpenSocket(config.SOCKET_IO_URL);
-        socket.emit('lobby:connect', {
-            name: this._name,
-            password: this._password
-        });
+        User.socket.emit('lobby:connect', this.toJSON());
     }
 
     disconnect() {
@@ -60,11 +45,6 @@ class Lobby
 
     start() {
 
-    }
-
-    // TODO: add server logic here to generate a new id
-    static getNewId() {
-        return ++Lobby.currentId;
     }
 }
 

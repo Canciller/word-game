@@ -1,5 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
+import Menu from 'components/Menu';
+import Button from 'components/Button';
+import Textfield from 'components/Textfield';
 
 import { UserConsumer } from 'context/UserContext';
 
@@ -7,35 +10,37 @@ import './Home.scss';
 
 function Home() {
     return (
-        <div
-            id='Home'
-            className='container'
-        >
-            <div className='dialog'>
-                <div className='dialog-content'>
-                    <h1 className='dialog-title'>
-                        Choose a nickname to start playing!
-                    </h1>
-                    <div id='nickname-form'>
-                        <UserConsumer>
-                            { user => (
-                                <input
-                                    onChange={e => user.name = e.target.value}
-                                    type='text'
-                                    placeholder={user.name}
-                                />
-                            )}
-                        </UserConsumer>
-                    </div>
-                </div>
-                <div className='dialog-actions'>
-                    <button className='dialog-action link'>
-                        <Link to='/lobby'>
-                            Play
-                        </Link>
-                    </button>
-                </div>
-            </div>
+        <div className='container'>
+            <Menu
+                title={
+                    <h1>Choose a nickname to start playing!</h1>
+                }
+                content={
+                    <UserConsumer>
+                        { user => (
+                            <Textfield
+                                onChange={e => user.name = e.target.value}
+                                label='Nickname'
+                                placeholder={user.name}
+                            />
+                        ) }
+                    </UserConsumer>
+                }
+                actions={
+                    <UserConsumer>
+                        { user => (
+                            <Button
+                                onClick={e => user.save()}
+                                fullWidth
+                                to='/lobby'
+                                type='success'
+                            >
+                                Play
+                            </Button>
+                        ) }
+                    </UserConsumer>
+                }
+            />
         </div>
     );
 }
