@@ -8,51 +8,57 @@ import { UserConsumer } from 'context/UserContext';
 
 import './Nickname.scss';
 
-function Nickname() {
-    return (
-        <div className='container'>
-            <Menu
-                title={
-                    <h1>Change nickname</h1>
-                }
-                content={
-                    <UserConsumer>
-                        { user => (
-                            <Textfield
-                                onChange={e => user.name = e.target.value}
-                                label='Nickname'
-                                placeholder={ user.name }
-                            />
-                        ) }
-                    </UserConsumer>
-                }
-                actions={
-                    <React.Fragment>
+export default class Nickname extends React.Component
+{
+    render() {
+        const { history } = this.props;
+
+        return (
+            <div className='container'>
+                <Menu
+                    title={
+                        <h1>Change nickname</h1>
+                    }
+                    content={
                         <UserConsumer>
                             { user => (
-                                <Button
-                                    onClick={e => user.save()}
-                                    fullWidth
-                                    to='/lobby'
-                                    type='success'
-                                >
-                                    Confirm
-                                </Button>
+                                <Textfield
+                                    onChange={e => user.name = e.target.value}
+                                    label='Nickname'
+                                    placeholder={ user.name }
+                                    autoFocus
+                                />
                             ) }
                         </UserConsumer>
-                        <Button
-                            className='Button-cancel'
-                            fullWidth
-                            to='/lobby'
-                            type='error'
-                        >
-                            Cancel
-                        </Button>
-                    </React.Fragment>
-                }
-            />
-        </div>
-    );
+                    }
+                    actions={
+                        <React.Fragment>
+                            <UserConsumer>
+                                { user => (
+                                    <Button
+                                        onClick={e => {
+                                            user.save()
+                                            history.goBack()
+                                        }}
+                                        fullWidth
+                                        type='success'
+                                    >
+                                        Confirm
+                                    </Button>
+                                ) }
+                            </UserConsumer>
+                            <Button
+                                onClick={e => history.goBack() }
+                                className='Button-cancel'
+                                fullWidth
+                                type='error'
+                            >
+                                Cancel
+                            </Button>
+                        </React.Fragment>
+                    }
+                />
+            </div>
+        )
+    }
 }
-
-export default Nickname;

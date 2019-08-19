@@ -5,7 +5,11 @@
     display: block;
     text-align: center;
     text-decoration: none;
-    border: none;
+    border: 1px solid;
+
+    &:focus, &:hover {
+        border-color: #4a4a4a;
+    }
 
     // TODO: Add browser prefixes to cursor
     cursor: pointer;
@@ -24,6 +28,7 @@
 
     // TODO: Create #ededed variable
     background: #ededed;
+    border-color: #ededed;
 
     // TODO: Create #4a4a4a variable
     color: #4a4a4a;
@@ -31,6 +36,7 @@
 
 .Button-success {
     background: #8ef2a8;
+    border-color: #8ef2a8;
 }
 
 .Button-warning {
@@ -39,6 +45,7 @@
 
 .Button-error {
     background: #f68585;
+    border-color: #f68585;
 }
 
 .Button-fullWidth {

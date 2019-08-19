@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 
 import Menu from 'components/Menu';
 import Button from 'components/Button';
+import TextField from 'components/Textfield';
 
 import { UserConsumer } from 'context/UserContext';
 
-import './Lobby.scss'
-
-class Lobby extends React.Component
+class LobbyJoin extends React.Component
 {
     render() {
         return (
@@ -16,7 +15,7 @@ class Lobby extends React.Component
                 <Menu
                     title={
                         <React.Fragment>
-                            <h1>Join or create a lobby</h1>
+                            <h1>Join a lobby</h1>
                             <UserConsumer>
                                 { user => (
                                     <p>
@@ -34,21 +33,39 @@ class Lobby extends React.Component
                             </UserConsumer>
                         </React.Fragment>
                     }
+                    content={
+                        // TODO: Add autofocus on lobby-code textfield
+                        <React.Fragment>
+                            <TextField
+                                id='lobby-code'
+                                label='Lobby code'
+                                autoFocus
+                            >
+                            </TextField>
+                            <TextField
+                                id='lobby-password'
+                                label='Lobby password'
+                                type='password'
+                                verticalGutter
+                            >
+                            </TextField>
+                        </React.Fragment>
+                    }
                     actions={
                         <React.Fragment>
                             <Button
                                 fullWidth
-                                to='/lobby/create'
-                                autoFocus
+                                type='success'
                             >
-                                Create
+                                Join
                             </Button>
                             <Button
                                 fullWidth
-                                to='/lobby/join'
-                                className='Button-join'
+                                type='error'
+                                to='/lobby'
+                                className='Button-cancel'
                             >
-                                Join
+                                Cancel
                             </Button>
                         </React.Fragment>
                     }
@@ -58,4 +75,4 @@ class Lobby extends React.Component
     }
 }
 
-export default Lobby;
+export default LobbyJoin;

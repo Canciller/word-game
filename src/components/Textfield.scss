@@ -25,6 +25,10 @@
 .Textfield-input {
     flex: 1;
 
+    &:focus, &:hover {
+        border-color: #dbdbdb;
+    }
+
     // TODO: Define global padding for controls
     padding: 8px;
 
@@ -33,4 +37,8 @@
     border-width: 1px;
     border-color: #ededed;
     border-style: solid;
+}
+
+.Textfield-verticalGutter {
+    margin-top: 10px;
 }

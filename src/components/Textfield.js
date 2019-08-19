@@ -8,13 +8,13 @@ class Textfield extends React.Component
     render() {
         const {
             id, className,
-            label,
+            label, verticalGutter,
             ...other
         } = this.props;
 
         return (
             <div
-                className={classNames('Textfield', className)}
+                className={classNames('Textfield', { 'Textfield-verticalGutter' : verticalGutter }, className)}
             >
                 <label
                     className={
