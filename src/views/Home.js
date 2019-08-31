@@ -4,7 +4,7 @@ import Menu from 'components/Menu';
 import Button from 'components/Button';
 import Textfield from 'components/Textfield';
 
-import { UserConsumer } from 'context/UserContext';
+import { PlayerConsumer } from 'context/PlayerContext';
 
 import './Home.scss';
 
@@ -16,7 +16,7 @@ function Home() {
                     <h1>Choose a nickname to start playing!</h1>
                 }
                 content={
-                    <UserConsumer>
+                    <PlayerConsumer>
                         { user => (
                             <Textfield
                                 onChange={e => user.name = e.target.value}
@@ -24,13 +24,13 @@ function Home() {
                                 placeholder={user.name}
                             />
                         ) }
-                    </UserConsumer>
+                    </PlayerConsumer>
                 }
                 actions={
-                    <UserConsumer>
+                    <PlayerConsumer>
                         { user => (
                             <Button
-                                onClick={e => user.save()}
+                                onClick={e => user.create()}
                                 fullWidth
                                 to='/lobby'
                                 type='success'
@@ -38,7 +38,7 @@ function Home() {
                                 Play
                             </Button>
                         ) }
-                    </UserConsumer>
+                    </PlayerConsumer>
                 }
             />
         </div>

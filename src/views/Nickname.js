@@ -4,7 +4,7 @@ import Menu from 'components/Menu';
 import Button from 'components/Button';
 import Textfield from 'components/Textfield';
 
-import { UserConsumer } from 'context/UserContext';
+import { PlayerConsumer } from 'context/PlayerContext';
 
 import './Nickname.scss';
 
@@ -20,7 +20,7 @@ export default class Nickname extends React.Component
                         <h1>Change nickname</h1>
                     }
                     content={
-                        <UserConsumer>
+                        <PlayerConsumer>
                             { user => (
                                 <Textfield
                                     onChange={e => user.name = e.target.value}
@@ -29,15 +29,15 @@ export default class Nickname extends React.Component
                                     autoFocus
                                 />
                             ) }
-                        </UserConsumer>
+                        </PlayerConsumer>
                     }
                     actions={
                         <React.Fragment>
-                            <UserConsumer>
+                            <PlayerConsumer>
                                 { user => (
                                     <Button
                                         onClick={e => {
-                                            user.save()
+                                            user.update()
                                             history.goBack()
                                         }}
                                         fullWidth
@@ -46,7 +46,7 @@ export default class Nickname extends React.Component
                                         Confirm
                                     </Button>
                                 ) }
-                            </UserConsumer>
+                            </PlayerConsumer>
                             <Button
                                 onClick={e => history.goBack() }
                                 className='Button-cancel'

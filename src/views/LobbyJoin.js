@@ -5,7 +5,8 @@ import Menu from 'components/Menu';
 import Button from 'components/Button';
 import TextField from 'components/Textfield';
 
-import { UserConsumer } from 'context/UserContext';
+import { PlayerConsumer } from 'context/PlayerContext';
+import { LobbyConsumer } from 'context/LobbyContext';
 
 class LobbyJoin extends React.Component
 {
@@ -16,7 +17,7 @@ class LobbyJoin extends React.Component
                     title={
                         <React.Fragment>
                             <h1>Join a lobby</h1>
-                            <UserConsumer>
+                            <PlayerConsumer>
                                 { user => (
                                     <p>
                                         Playing as{' '}
@@ -30,35 +31,46 @@ class LobbyJoin extends React.Component
                                         </b>
                                     </p>
                                 ) }
-                            </UserConsumer>
+                            </PlayerConsumer>
                         </React.Fragment>
                     }
                     content={
-                        // TODO: Add autofocus on lobby-code textfield
-                        <React.Fragment>
-                            <TextField
-                                id='lobby-code'
-                                label='Lobby code'
-                                autoFocus
-                            >
-                            </TextField>
-                            <TextField
-                                id='lobby-password'
-                                label='Lobby password'
-                                type='password'
-                                verticalGutter
-                            >
-                            </TextField>
-                        </React.Fragment>
+                        <LobbyConsumer>
+                            { lobby =>
+                                    <React.Fragment>
+                                        <TextField
+                                            onChange={ e => lobby.id = e.target.value }
+                                            id='lobby-code'
+                                            label='Lobby code'
+                                            autoFocus
+                                        >
+                                        </TextField>
+                                        <TextField
+                                            onChange={ e => lobby.password = e.target.value }
+                                            id='lobby-password'
+                                            label='Lobby password'
+                                            type='password'
+                                            verticalGutter
+                                        >
+                                        </TextField>
+                                    </React.Fragment>
+                            }
+                        </LobbyConsumer>
                     }
                     actions={
                         <React.Fragment>
-                            <Button
-                                fullWidth
-                                type='success'
-                            >
-                                Join
-                            </Button>
+                            <LobbyConsumer>
+                                { lobby =>
+                                        <Button
+                                            fullWidth
+                                            type='success'
+                                            onClick={e => lobby.join() }
+                                            to='/lobby/settings'
+                                        >
+                                            Join
+                                        </Button>
+                                }
+                            </LobbyConsumer>
                             <Button
                                 fullWidth
                                 type='error'
