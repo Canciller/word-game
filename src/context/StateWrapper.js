@@ -2,21 +2,32 @@ import _ from 'underscore'
 
 export default class StateWrapper
 {
-    constructor(provider) {
+    constructor(provider, namespace) {
         this._provider = provider;
+        this._namespace = namespace;
     }
 
-    get _state () {
-        return this._provider.state;
+    get state () {
+        return this._namespace ? this._provider.state[this._namespace] : this._provider.state;
     }
 
-    set _state (object) {
-        this._provider.setState(object);
+    set state (object) {
+        if(this._namespace)
+            this._provider.setState({
+                [this._namespace] : { ...this.state, ...object }
+            });
+        else this._provider.setState(object);
     }
 
-    _set_state(object, callback) {
-        this._provider.setState(object, () => {
+    setState(object, callback) {
+        const func = () => {
             if(_.isFunction(callback)) callback(object);
-        });
+        }
+
+        if(this._namespace)
+            this._provider.setState({
+                [this._namespace] : { ...this.state, ...object }
+            }, func);
+        else this._provider.setState(object, func);
     }
 }

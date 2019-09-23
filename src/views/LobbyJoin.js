@@ -1,24 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { withToastManager } from 'react-toast-notifications';
+
 import Menu from 'components/Menu';
 import Button from 'components/Button';
 import TextField from 'components/Textfield';
 
-import { PlayerConsumer } from 'context/PlayerContext';
-import { LobbyConsumer } from 'context/LobbyContext';
+import { GameConsumer } from 'context/GameContext';
 
 class LobbyJoin extends React.Component
 {
     render() {
+        const {
+            toastManager,
+            history
+        } = this.props;
+
         return (
             <div className='container'>
                 <Menu
                     title={
                         <React.Fragment>
                             <h1>Join a lobby</h1>
-                            <PlayerConsumer>
-                                { user => (
+                            <GameConsumer>
+                                { ({ player }) => (
                                     <p>
                                         Playing as{' '}
                                         <b>
@@ -26,20 +32,20 @@ class LobbyJoin extends React.Component
                                                 to='/nickname'
                                                 className='Lobby-nickname'
                                             >
-                                                {user.name}
+                                                {player.name}
                                             </Link>
                                         </b>
                                     </p>
                                 ) }
-                            </PlayerConsumer>
+                            </GameConsumer>
                         </React.Fragment>
                     }
                     content={
-                        <LobbyConsumer>
-                            { lobby =>
+                        <GameConsumer>
+                            { ({ lobby }) =>
                                     <React.Fragment>
                                         <TextField
-                                            onChange={ e => lobby.id = e.target.value }
+                                            onChange={ e => lobby.code = e.target.value }
                                             id='lobby-code'
                                             label='Lobby code'
                                             autoFocus
@@ -55,22 +61,28 @@ class LobbyJoin extends React.Component
                                         </TextField>
                                     </React.Fragment>
                             }
-                        </LobbyConsumer>
+                        </GameConsumer>
                     }
                     actions={
                         <React.Fragment>
-                            <LobbyConsumer>
-                                { lobby =>
+                            <GameConsumer>
+                                { game =>
                                         <Button
                                             fullWidth
                                             type='success'
-                                            onClick={e => lobby.join() }
-                                            to='/lobby/settings'
+                                            onClick={ e => game.join(err => {
+                                                if(err) {
+                                                    toastManager.add(
+                                                        err.message,
+                                                        { appearance: 'error', autoDismiss: true}
+                                                    );
+                                                } else history.push('/lobby/settings');
+                                            }) }
                                         >
                                             Join
                                         </Button>
                                 }
-                            </LobbyConsumer>
+                            </GameConsumer>
                             <Button
                                 fullWidth
                                 type='error'
@@ -87,4 +99,4 @@ class LobbyJoin extends React.Component
     }
 }
 
-export default LobbyJoin;
+export default withToastManager(LobbyJoin);

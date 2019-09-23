@@ -1,50 +1,50 @@
-import server from 'server';
-import StateWrapper from './StateWrapper';
+import _ from 'underscore'
 
-export default class Lobby extends StateWrapper
+export default class Lobby
 {
-    constructor(provider) {
-        super(provider);
+    constructor(onChange) {
+        this._onChangeCallback = onChange;
     }
 
-    get id () {
-        return this._state.id;
+    _onChange() {
+        if(_.isFunction(this._onChangeCallback)) this._onChangeCallback(this);
     }
 
-    set id (id) {
-        this._state = { id };
+    get code () {
+        return this._code;
+    }
+
+    set code (code) {
+        this._code = code;
+        this._onChange();
     }
 
     get name () {
-        return this._state.name;
+        return this._name;
     }
 
     set name (name) {
-        this._state = { name };
+        this._name = name;
+        this._onChange();
     }
 
     get password () {
-        return this._state.password;
+        return this._password;
     }
 
     set password (password) {
-        this._state = { password };
+        this._password = password;
+        this._onChange();
     }
 
     get players () {
-        return this._state.players || [];
-    }
-
-    create() {
-        server.socket.emit('lobby:create', this.toJSON(), data => {
-            this._state = data;
-        });
+        return this._players || {};
     }
 
     toJSON() {
-        let { id, name, password, players } = this._state;
+        let { code, name, password, players } = this;
         return {
-            id: parseInt(id),
+            code,
             name,
             password,
             players

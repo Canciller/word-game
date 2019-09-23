@@ -1,39 +1,57 @@
 import React from 'react';
 
-import { PlayerConsumer } from 'context/PlayerContext';
-import { LobbyConsumer } from 'context/LobbyContext';
+import { GameConsumer } from 'context/GameContext';
 
-function Setting(props) {
-    const { children, name } = props;
-    return (
-        <p>
-            <b>{name}:{' '}</b>
-            {children}
-        </p>
-    )
-}
+import './LobbySettings.scss';
 
-export default class LobbyTest extends React.Component
+export default class LobbySettings extends React.Component
 {
     render() {
         return (
-            <div className='container'>
-                <h1>Lobby Testing</h1>
-                    <LobbyConsumer>
-                        { lobby => {
-                            return (
-                                <React.Fragment>
-                                    <h2>Lobby</h2>
-                                    <div>
-                                        <Setting name='Code'>{lobby.id}</Setting>
-                                        <Setting name='Name'>{lobby.name}</Setting>
-                                        <Setting name='Password'>{lobby.password}</Setting>
-                                    </div>
-                                </React.Fragment>
-                            )
-                        } }
-                    </LobbyConsumer>
-            </div>
+            <GameConsumer>
+                { ({ gamestate }) => {
+                    const {
+                        code,
+                        name,
+                        password,
+                        players
+                    } = gamestate;
+
+                    return (
+                        <div className='container LobbySettings'>
+                            <p className='Lobby-code'>
+                                { code }
+                            </p>
+                            { name &&
+                                <p>
+                                    { `Name: ${name}` }
+                                </p>
+                            }
+                            { password &&
+                                <p>
+                                    { `Password: ${password}` }
+                                </p>
+                            }
+                            <br/>
+                            { players &&
+                                <div className='Lobby-players'>
+                                    <h4>Players</h4>
+                                    { Object.keys(players).map(id => {
+                                        let { name } = players[id];
+                                        return (
+                                            <p key={id} className='Lobby-player'>
+                                                <span className='Lobby-player-id'>{ id }</span>
+                                                {` `}
+                                                <span className='Lobby-player-nickname'>{ name }</span>
+                                            </p>
+                                        )
+                                    }) }
+                                </div>
+                            }
+                        </div>
+                    )
+                }}
+            </GameConsumer>
         );
     }
 }

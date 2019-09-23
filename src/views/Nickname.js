@@ -4,7 +4,7 @@ import Menu from 'components/Menu';
 import Button from 'components/Button';
 import Textfield from 'components/Textfield';
 
-import { PlayerConsumer } from 'context/PlayerContext';
+import { GameConsumer } from 'context/GameContext';
 
 import './Nickname.scss';
 
@@ -14,51 +14,45 @@ export default class Nickname extends React.Component
         const { history } = this.props;
 
         return (
-            <div className='container'>
-                <Menu
-                    title={
-                        <h1>Change nickname</h1>
-                    }
-                    content={
-                        <PlayerConsumer>
-                            { user => (
+            <GameConsumer>
+                { ({ player }) => (
+                    <div className='container'>
+                        <Menu
+                            title={
+                                <h1>Change nickname</h1>
+                            }
+                            content={
                                 <Textfield
-                                    onChange={e => user.name = e.target.value}
+                                    onChange={ e => player.name = e.target.value }
+                                    onEnterPress= { e => player.save(() => history.goBack()) }
                                     label='Nickname'
-                                    placeholder={ user.name }
+                                    placeholder={ player.name }
                                     autoFocus
                                 />
-                            ) }
-                        </PlayerConsumer>
-                    }
-                    actions={
-                        <React.Fragment>
-                            <PlayerConsumer>
-                                { user => (
+                            }
+                            actions={
+                                <React.Fragment>
                                     <Button
-                                        onClick={e => {
-                                            user.update()
-                                            history.goBack()
-                                        }}
+                                        onClick={ e => player.save(() => history.goBack()) }
                                         fullWidth
                                         type='success'
                                     >
                                         Confirm
                                     </Button>
-                                ) }
-                            </PlayerConsumer>
-                            <Button
-                                onClick={e => history.goBack() }
-                                className='Button-cancel'
-                                fullWidth
-                                type='error'
-                            >
-                                Cancel
-                            </Button>
-                        </React.Fragment>
-                    }
-                />
-            </div>
+                                <Button
+                                    onClick={ e => history.goBack() }
+                                    className='Button-cancel'
+                                    fullWidth
+                                    type='error'
+                                >
+                                    Cancel
+                                </Button>
+                            </React.Fragment>
+                            }
+                        />
+                    </div>
+                )}
+            </GameConsumer>
         )
     }
 }

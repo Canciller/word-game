@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import { PlayerProvider } from 'context/PlayerContext';
-import { LobbyProvider } from 'context/LobbyContext';
+import { ToastProvider } from 'react-toast-notifications';
+
+import { GameProvider } from 'context/GameContext';
 
 import {
     Home,
@@ -18,8 +19,8 @@ import './App.css';
 function App() {
     return (
         <Router>
-            <PlayerProvider>
-                <LobbyProvider>
+            <ToastProvider>
+                <GameProvider>
                     <Route exact path='/' component={Home} />
 
                     <Route exact path='/lobby/create' component={LobbyCreate} />
@@ -28,8 +29,8 @@ function App() {
                     <Route exact path='/lobby' component={Lobby} />
 
                     <Route exact path='/nickname' component={Nickname} />
-                </LobbyProvider>
-            </PlayerProvider>
+                </GameProvider>
+            </ToastProvider>
         </Router>
     );
 }

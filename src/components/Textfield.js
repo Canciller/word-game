@@ -1,14 +1,34 @@
 import React from 'react';
+
 import classNames from 'classnames';
+import _ from 'underscore';
 
 import './Textfield.scss';
 
 class Textfield extends React.Component
 {
+    onKeyPress = e => {
+        const {
+            onEnterPress,
+            onKeyPress
+        } = this.props;
+
+        switch(e.key) {
+            case 'Enter':
+                if(_.isFunction(onEnterPress))
+                    onEnterPress(e);
+                break;
+            default:
+                if(_.isFunction(onKeyPress))
+                    onKeyPress(e);
+        }
+    }
+
     render() {
         const {
             id, className,
             label, verticalGutter,
+            onEnterPress,
             ...other
         } = this.props;
 
@@ -35,6 +55,7 @@ class Textfield extends React.Component
                     id={id}
                     type='text'
                     {...other}
+                    onKeyPress={this.onKeyPress}
                 />
             </div>
         )

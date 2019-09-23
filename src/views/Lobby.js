@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Menu from 'components/Menu';
 import Button from 'components/Button';
 
-import { PlayerConsumer } from 'context/PlayerContext';
+import { GameConsumer } from 'context/GameContext';
 
 import './Lobby.scss'
 
@@ -17,8 +17,8 @@ class Lobby extends React.Component
                     title={
                         <React.Fragment>
                             <h1>Join or create a lobby</h1>
-                            <PlayerConsumer>
-                                { user => (
+                            <GameConsumer>
+                                { ({ player }) => (
                                     <p>
                                         Playing as{' '}
                                         <b>
@@ -26,12 +26,12 @@ class Lobby extends React.Component
                                                 to='/nickname'
                                                 className='Lobby-nickname'
                                             >
-                                                {user.name}
+                                                {player.name}
                                             </Link>
                                         </b>
                                     </p>
                                 ) }
-                            </PlayerConsumer>
+                            </GameConsumer>
                         </React.Fragment>
                     }
                     actions={

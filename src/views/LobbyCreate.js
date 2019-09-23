@@ -1,24 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { withToastManager } from 'react-toast-notifications';
+
 import Menu from 'components/Menu';
 import Button from 'components/Button';
 import TextField from 'components/Textfield';
 
-import { PlayerConsumer } from 'context/PlayerContext';
-import { LobbyConsumer } from 'context/LobbyContext';
+import { GameConsumer } from 'context/GameContext';
 
 class LobbyCreate extends React.Component
 {
     render() {
+        const {
+            toastManager,
+            history
+        } = this.props;
+
         return (
             <div className='container'>
                 <Menu
                     title={
                         <React.Fragment>
                             <h1>Create a lobby</h1>
-                            <PlayerConsumer>
-                                { user => (
+                            <GameConsumer>
+                                { ({ player }) => (
                                     <p>
                                         Playing as{' '}
                                         <b>
@@ -26,27 +32,27 @@ class LobbyCreate extends React.Component
                                                 to='/nickname'
                                                 className='Lobby-nickname'
                                             >
-                                                {user.name}
+                                                {player.name}
                                             </Link>
                                         </b>
                                     </p>
                                 ) }
-                            </PlayerConsumer>
+                            </GameConsumer>
                         </React.Fragment>
                     }
                     content={
-                        <LobbyConsumer>
-                            { lobby =>
+                        <GameConsumer>
+                            { ({ lobby }) =>
                                     <React.Fragment>
                                         <TextField
-                                            onChange={e => lobby.name = e.target.value }
+                                            onChange={ e => lobby.name = e.target.value }
                                             id='lobby-name'
                                             label='Lobby name'
                                             autoFocus
                                         >
                                         </TextField>
                                         <TextField
-                                            onChange={e => lobby.password = e.target.value }
+                                            onChange={ e => lobby.password = e.target.value }
                                             id='lobby-password'
                                             label='Lobby password'
                                             type='password'
@@ -55,22 +61,28 @@ class LobbyCreate extends React.Component
                                         </TextField>
                                     </React.Fragment>
                             }
-                        </LobbyConsumer>
+                        </GameConsumer>
                     }
                     actions={
                         <React.Fragment>
-                            <LobbyConsumer>
-                                { lobby =>
+                            <GameConsumer>
+                                { game =>
                                         <Button
                                             fullWidth
                                             type='success'
-                                            onClick={e => lobby.create()}
-                                            to='/lobby/settings'
+                                            onClick={ e => game.create(err => {
+                                                if(err) {
+                                                    toastManager.add(
+                                                        err.message,
+                                                        { appearance: 'error', autoDismiss: true}
+                                                    );
+                                                } else history.push('/lobby/settings');
+                                            }) }
                                         >
                                             Create
                                         </Button>
                                 }
-                            </LobbyConsumer>
+                            </GameConsumer>
                             <Button
                                 fullWidth
                                 type='error'
@@ -87,4 +99,4 @@ class LobbyCreate extends React.Component
     }
 }
 
-export default LobbyCreate;
+export default withToastManager(LobbyCreate);

@@ -1,78 +1,43 @@
-import server from 'server';
 import _ from 'underscore'
 
-import StateWrapper from './StateWrapper';
+const defaultUsername = 'guest';
 
-const default_username = 'guest';
-
-class Player extends StateWrapper
+export default class Player
 {
-    constructor(provider) {
-        super(provider);
+    constructor(onChange) {
+        this._onChangeCallback = onChange;
     }
 
     get name () {
-        return this._state.name || default_username;
+        return this._name || defaultUsername;
     }
 
     set name (name) {
-        this._new_name = name;
+        this._newName = name;
+        this._onChange();
     }
 
-    get lobby () {
-        return this._state.lobby;
+    _onChange(callback) {
+        if(_.isFunction(this._onChangeCallback)) this._onChangeCallback(this, callback);
     }
 
-    set lobby (lobby) {
-        this._new_lobby = lobby;
+    _verifiedName() {
+        if(_.isString(this._newName) && this._newName !== '')
+            return this._newName;
+
+        if(_.isString(this._name) && this._name !== '')
+            return this._name;
+
+        return defaultUsername;
     }
 
-    _verified_name() {
-        if(_.isString(this._new_name) && this._new_name !== '')
-            return this._new_name;
-
-        if(_.isString(this._state.name) && this._state.name !== '')
-            return this._state.name;
-
-        return default_username;
-    }
-
-    _verified_lobby() {
-        return this._new_lobby;
-    }
-
-    _save(callback) {
-        this._set_state({
-            name: this._verified_name(),
-            lobby: this._verified_lobby()
-        }, callback);
-    }
-
-    create() {
-        this._save(() => {
-            server.socket.emit('player:create', this.toJSON());
-        });
-    }
-
-    update() {
-        this._save(() => {
-            server.socket.emit('player:update', this.toJSON());
-        });
-    }
-
-    join() {
-        this._save(() => {
-            server.socket.emit('player:join', this.toJSON());
-        });
+    save(callback) {
+        this._name = this._verifiedName();
+        this._onChange(callback);
     }
 
     toJSON() {
-        let { name, lobby } = this._state;
-        return {
-            name,
-            lobby
-        }
+        let { name } = this;
+        return { name }
     }
 }
-
-export default Player;
