@@ -14,7 +14,7 @@ import {
     Nickname
 } from 'views';
 
-import './App.css';
+import './App.scss';
 
 function App() {
     return (
