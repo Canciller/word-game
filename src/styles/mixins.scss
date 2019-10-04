@@ -1,0 +1,15 @@
+@mixin vendor-prefixes($property, $value) {
+    -webkit-#{$property}: $value;
+    -moz-#{$property}: $value;
+    -ms-#{$property}: $value;
+    -o-#{$property}: $value;
+    #{$property}: $value;
+}
+
+@mixin cursor($value) {
+    @include vendor-prefixes(cursor, $value)
+}
+
+@mixin user-select($value) {
+    @include vendor-prefixes(user-select, $value)
+}
