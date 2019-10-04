@@ -28,12 +28,14 @@ export default class Nickname extends React.Component
                                     label='Nickname'
                                     placeholder={ player.name }
                                     autoFocus
+                                    topGutter
                                 />
                             }
                             actions={
                                 <React.Fragment>
                                     <Button
                                         onClick={ e => player.save(() => history.goBack()) }
+                                        verticalGutters
                                         fullWidth
                                         type='success'
                                     >
@@ -41,7 +43,6 @@ export default class Nickname extends React.Component
                                     </Button>
                                 <Button
                                     onClick={ e => history.goBack() }
-                                    className='Button-cancel'
                                     fullWidth
                                     type='error'
                                 >

@@ -40,13 +40,13 @@ class Lobby extends React.Component
                                 fullWidth
                                 to='/lobby/create'
                                 autoFocus
+                                verticalGutters
                             >
                                 Create
                             </Button>
                             <Button
                                 fullWidth
                                 to='/lobby/join'
-                                className='Button-join'
                             >
                                 Join
                             </Button>

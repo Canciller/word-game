@@ -49,6 +49,7 @@ class LobbyCreate extends React.Component
                                             id='lobby-name'
                                             label='Lobby name'
                                             autoFocus
+                                            verticalGutters
                                         >
                                         </TextField>
                                         <TextField
@@ -56,7 +57,6 @@ class LobbyCreate extends React.Component
                                             id='lobby-password'
                                             label='Lobby password'
                                             type='password'
-                                            verticalGutter
                                         >
                                         </TextField>
                                     </React.Fragment>
@@ -69,6 +69,7 @@ class LobbyCreate extends React.Component
                                 { game =>
                                         <Button
                                             fullWidth
+                                            verticalGutters
                                             type='success'
                                             onClick={ e => game.create(err => {
                                                 if(err) {

@@ -49,6 +49,7 @@ class LobbyJoin extends React.Component
                                             id='lobby-code'
                                             label='Lobby code'
                                             autoFocus
+                                            verticalGutters
                                         >
                                         </TextField>
                                         <TextField
@@ -56,7 +57,6 @@ class LobbyJoin extends React.Component
                                             id='lobby-password'
                                             label='Lobby password'
                                             type='password'
-                                            verticalGutter
                                         >
                                         </TextField>
                                     </React.Fragment>
@@ -69,6 +69,7 @@ class LobbyJoin extends React.Component
                                 { game =>
                                         <Button
                                             fullWidth
+                                            verticalGutters
                                             type='success'
                                             onClick={ e => game.join(err => {
                                                 if(err) {
@@ -87,7 +88,6 @@ class LobbyJoin extends React.Component
                                 fullWidth
                                 type='error'
                                 to='/lobby'
-                                className='Button-cancel'
                             >
                                 Cancel
                             </Button>
