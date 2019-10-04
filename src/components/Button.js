@@ -24,6 +24,9 @@ class Button extends React.Component
             className,
             type, fullWidth,
             autoFocus,
+            topGutter,
+            bottomGutter,
+            verticalGutters,
             ...other
         } = this.props;
 
@@ -35,7 +38,10 @@ class Button extends React.Component
                     classNames(
                         'Button', className,
                         type ? `Button-${type}` : undefined,
-                        { 'Button-fullWidth' : fullWidth }
+                        { 'Button-fullWidth' : fullWidth },
+                        { 'Button-topGutter' : topGutter },
+                        { 'Button-bottomGutter' : bottomGutter },
+                        { 'Button-verticalGutters' : verticalGutters }
                     )}
                 ref={this.button}
                 {...other}

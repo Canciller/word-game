@@ -27,14 +27,24 @@ class Textfield extends React.Component
     render() {
         const {
             id, className,
-            label, verticalGutter,
+            label,
             onEnterPress,
+            topGutter,
+            bottomGutter,
+            verticalGutters,
             ...other
         } = this.props;
 
         return (
             <div
-                className={classNames('Textfield', { 'Textfield-verticalGutter' : verticalGutter }, className)}
+                className={
+                    classNames(
+                        className,
+                        'Textfield',
+                        { 'Textfield-topGutter' : topGutter },
+                        { 'Textfield-bottomGutter' : bottomGutter },
+                        { 'Textfield-verticalGutters' : verticalGutters }
+                    )}
             >
                 <label
                     className={

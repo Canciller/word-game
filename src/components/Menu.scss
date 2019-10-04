@@ -1,4 +1,4 @@
-// TODO: Replace contants for variables
+@import 'styles/spacing';
 
 .Menu {
     margin: auto;
@@ -9,12 +9,12 @@
 .Menu-title {
     text-align: center;
 
-    margin-bottom: 20px;
+    margin-bottom: $vertical-margin;
 }
 
 .Menu-content {
+    display: flex;
+    flex-direction: column;
 }
 
-.Menu-actions {
-    margin-top: 10px;
-}
+.Menu-actions {}

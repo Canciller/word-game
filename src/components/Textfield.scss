@@ -1,5 +1,4 @@
-// TODO: Replace contants for variables
-// TODO: Define hover, focus, etc
+@import 'styles/all';
 
 .Textfield {
     display: flex;
@@ -11,34 +10,36 @@
     top: -8px;
     left: 5px;
 
-    // TODO: Add browser prefixes to user-select
-    user-select: none;
+    @include user-select(none)
 
+    font-size: $textfield-label-font-size;
 
-    // TODO: Create font-size variable for Textfield-label
-    font-size: 11px;
-
-    // TODO: Create #4a4a4a variable
-    color: #4a4a4a;
+    color: $foreground-color;
 }
 
 .Textfield-input {
     flex: 1;
 
     &:focus, &:hover {
-        border-color: #dbdbdb;
+        border-color: $silver-color;
     }
 
-    // TODO: Define global padding for controls
-    padding: 8px;
+    padding: $textfield-padding;
 
-    // TODO: Create border variables for Textfield-input
-    border-radius: 3px;
-    border-width: 1px;
-    border-color: #ededed;
-    border-style: solid;
+    border-radius: $border-radius-textfield;
+    border: $border;
+    border-color: $border-color;
 }
 
-.Textfield-verticalGutter {
-    margin-top: 10px;
+.Textfield-verticalGutters {
+    margin-top: $vertical-margin;
+    margin-bottom: $vertical-margin;
+}
+
+.Textfield-topGutter {
+    margin-top: $vertical-margin;
+}
+
+.Textfield-bottomGutter {
+    margin-bottom: $vertical-margin;
 }

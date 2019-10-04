@@ -1,53 +1,59 @@
-// TODO: Replace constants for variables
-// TODO: Define hover, focus, etc
+@import 'styles/all';
 
 .Button {
     display: block;
     text-align: center;
     text-decoration: none;
-    border: 1px solid;
+    border: $border;
 
     &:focus, &:hover {
-        border-color: #4a4a4a;
+        border-color: $foreground-color;
     }
 
-    // TODO: Add browser prefixes to cursor
-    cursor: pointer;
+    @include cursor(pointer)
 
-    // TODO: Add browser prefixes to user-select
-    user-select: none;
+    @include user-select(none)
 
-    // TODO: Create font-size variable for Button
-    font-size: 18px;
+    font-size: $button-font-size;
 
-    // TODO: Define global padding for controls
-    padding: 8px;
+    padding: $button-padding;
 
-    // TODO: Define global border-radius
-    border-radius: 2px;
+    border-radius: $border-radius-button;
 
-    // TODO: Create #ededed variable
-    background: #ededed;
-    border-color: #ededed;
+    background: $border-color;
+    border-color: $border-color;
 
-    // TODO: Create #4a4a4a variable
-    color: #4a4a4a;
+    color: $foreground-color;
 }
 
 .Button-success {
-    background: #8ef2a8;
-    border-color: #8ef2a8;
+    background: $green-color;
+    border-color: $green-color;
 }
 
 .Button-warning {
-    // TODO: Define background for Button-warning
+    background: $yellow-color;
+    border-color: $yellow-color;
 }
 
 .Button-error {
-    background: #f68585;
-    border-color: #f68585;
+    background: $red-color;
+    border-color: $red-color;
 }
 
 .Button-fullWidth {
     width: 100%;
+}
+
+.Button-verticalGutters {
+    margin-top: $vertical-margin;
+    margin-bottom: $vertical-margin;
+}
+
+.Button-topGutter {
+    margin-top: $vertical-margin;
+}
+
+.Button-bottomGutter {
+    margin-bottom: $vertical-margin;
 }
