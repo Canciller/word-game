@@ -1,0 +1,13 @@
+@import 'styles/colors';
+
+.Icon {
+    display: flex;
+    border-radius: 50%;
+
+    color: $icon-color;
+    background: $border-color;
+
+       * {
+           margin: auto;
+       }
+}

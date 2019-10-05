@@ -23,7 +23,9 @@ export default class Home extends React.Component {
                                     onChange={ e => player.name = e.target.value }
                                     onEnterPress={ e => player.save(() => this.props.history.push('/lobby')) }
                                     label='Nickname'
+                                    id='nickname'
                                     placeholder={ player.name }
+                                    verticalGutters
                                 />
                             }
                             actions={

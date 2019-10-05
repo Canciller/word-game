@@ -1,18 +1,114 @@
-.LobbySettings {
-    position: relative;
+@import 'styles/spacing', 'styles/colors';
 
-    .Lobby-code {
-        position: absolute;
-        right: 5px;
+.container.LobbySettings {
+    flex-direction: row;
+}
+
+.LobbySettings-left {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+
+    padding: $vertical-margin;
+
+    .LobbySettings-gamemode {
+        flex: 1;
+
+        .LobbySettings-gamemode-grid {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            grid-column-gap: $vertical-margin;
+            grid-row-gap: $vertical-margin;
+
+            .Button {
+                padding: 80px 0;
+                background: white;
+            }
+        }
     }
 
-    .Lobby-players {
-    }
+    .LobbySettings-extra {
+        display: flex;
+        align-items: flex-end;
 
-    .Lobby-player-id {
-    }
+        .LobbySettings-icons {
+            display: flex;
+            flex: 1;
 
-    .Lobby-player-nickname {
-        font-weight: bold;
+            .IconButton {
+                margin-right: $horizontal-margin;
+            }
+
+            .IconButton:last-child {
+                margin-right: 0;
+            }
+        }
+
+
+        .LobbySettings-info {
+            text-align: right;
+
+            h1 {
+                display: flex;
+                align-items: baseline;
+
+                span {
+                    font-size: 0.8em;
+                    font-weight: normal;
+                }
+            }
+        }
     }
 }
+
+.LobbySettings-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    overflow: auto;
+    overflow-x: hidden;
+    position: relative;
+
+
+    .LobbySettings-confirm {
+        position: sticky;
+        bottom: 0;
+
+        .Button {
+            border-radius: 0;
+        }
+    }
+
+    .LobbySettings-players {
+        flex: 1;
+        background: $border-color;
+
+        .LobbySettings-player {
+            width: 100%;
+
+            text-align: left;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+
+            background: white;
+            border-radius: 0;
+
+            .LobbySettings-player-name {
+                display: flex;
+            }
+
+            .Icon {
+                background: none;
+            }
+        }
+
+        .LobbySettings-player-you {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    }
+}
+

@@ -15,7 +15,7 @@ export default class Nickname extends React.Component
 
         return (
             <GameConsumer>
-                { ({ player }) => (
+                { ({ player, update_player }) => (
                     <div className='container'>
                         <Menu
                             title={
@@ -24,7 +24,7 @@ export default class Nickname extends React.Component
                             content={
                                 <Textfield
                                     onChange={ e => player.name = e.target.value }
-                                    onEnterPress= { e => player.save(() => history.goBack()) }
+                                    onEnterPress={ e => player.save(() => update_player(() => history.goBack())) }
                                     label='Nickname'
                                     placeholder={ player.name }
                                     autoFocus
@@ -34,7 +34,9 @@ export default class Nickname extends React.Component
                             actions={
                                 <React.Fragment>
                                     <Button
-                                        onClick={ e => player.save(() => history.goBack()) }
+                                        onClick={ e => player.save(() => {
+                                            update_player(() => history.goBack())
+                                        }) }
                                         verticalGutters
                                         fullWidth
                                         type='success'

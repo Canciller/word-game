@@ -37,7 +37,7 @@ export default class Player
     }
 
     toJSON() {
-        let { name } = this;
-        return { name }
+        let { name, ready } = this;
+        return { name, ready }
     }
 }

@@ -12,6 +12,8 @@
 
     @include user-select(none)
 
+    @include cursor(pointer)
+
     font-size: $textfield-label-font-size;
 
     color: $foreground-color;

@@ -1,5 +1,12 @@
+@import 'styles/colors';
+
 .container {
     display: flex;
     height: 100vh;
     flex-direction: column;
+    background: $background-color;
+}
+
+h1, h2, h3, p, a {
+    color: $foreground-color;
 }

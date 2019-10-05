@@ -5,16 +5,33 @@ import { ToastProvider } from 'react-toast-notifications';
 
 import { GameProvider } from 'context/GameContext';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+    faCog,
+    faQuestion,
+    faCrown,
+    faCheck,
+    faTimes,
+} from '@fortawesome/free-solid-svg-icons';
+
 import {
     Home,
     Lobby,
     LobbyCreate,
     LobbyJoin,
     LobbySettings,
-    Nickname
+    Nickname,
 } from 'views';
 
 import './App.scss';
+
+library.add(
+    faCog,
+    faQuestion,
+    faCrown,
+    faCheck,
+    faTimes,
+);
 
 function App() {
     return (

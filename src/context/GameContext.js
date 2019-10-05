@@ -24,6 +24,8 @@ class GameProvider extends React.Component
 
     join = callback => this._emit('game:join', callback);
 
+    update_player =  callback => this._emit('game:update:player', callback);
+
     _on(event, callback) {
         server.on(event, data => {
             if(_.isFunction(callback)) callback(data);
@@ -55,6 +57,7 @@ class GameProvider extends React.Component
             <GameContext.Provider value={{
                 create: this.create,
                 join: this.join,
+                update_player: this.update_player,
                 ...this.state
             }}>
                 { this.props.children }
