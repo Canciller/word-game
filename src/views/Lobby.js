@@ -4,36 +4,37 @@ import { Link } from 'react-router-dom';
 import Menu from 'components/Menu';
 import Button from 'components/Button';
 
-import { GameConsumer } from 'context/GameContext';
+import { withPlayerContext } from 'context/PlayerContext';
 
 import './Lobby.scss'
 
 class Lobby extends React.Component
 {
     render() {
+        const {
+            player
+        } = this.props;
+
         return (
             <div className='container'>
                 <Menu
                     title={
                         <React.Fragment>
                             <h1>Join or create a lobby</h1>
-                            <GameConsumer>
-                                { ({ player }) => (
-                                    <p>
-                                        Playing as{' '}
-                                        <b>
-                                            <Link
-                                                to='/nickname'
-                                                className='Lobby-nickname'
-                                            >
-                                                {player.name}
-                                            </Link>
-                                        </b>
-                                    </p>
-                                ) }
-                            </GameConsumer>
+                                <p>
+                                    Playing as{' '}
+                                    <b>
+                                        <Link
+                                            to='/nickname'
+                                            className='Lobby-nickname'
+                                        >
+                                            {player.name}
+                                        </Link>
+                                    </b>
+                                </p>
                         </React.Fragment>
                     }
+
                     actions={
                         <React.Fragment>
                             <Button
@@ -58,4 +59,4 @@ class Lobby extends React.Component
     }
 }
 
-export default Lobby;
+export default withPlayerContext(Lobby);

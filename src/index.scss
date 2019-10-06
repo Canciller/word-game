@@ -26,3 +26,7 @@ button::-moz-focus-inner {
 p {
     word-wrap: break-word;
 }
+
+html, body {
+    min-height: 100vh;
+}

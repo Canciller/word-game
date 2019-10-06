@@ -2,12 +2,16 @@
 
 .container.LobbySettings {
     flex-direction: row;
+    height: 100vh;
 }
 
 .LobbySettings-left {
     display: flex;
     flex-direction: column;
     flex: 2;
+
+    overflow: auto;
+    overflow-x: hidden;
 
     padding: $vertical-margin;
 
@@ -28,6 +32,9 @@
     }
 
     .LobbySettings-extra {
+        position: sticky;
+        bottom: 0;
+
         display: flex;
         align-items: flex-end;
 
@@ -96,11 +103,14 @@
             background: white;
             border-radius: 0;
 
+            color: $foreground-color;
+
             .LobbySettings-player-name {
                 display: flex;
             }
 
             .Icon {
+                color: $foreground-color;
                 background: none;
             }
         }

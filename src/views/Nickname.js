@@ -4,58 +4,77 @@ import Menu from 'components/Menu';
 import Button from 'components/Button';
 import Textfield from 'components/Textfield';
 
-import { GameConsumer } from 'context/GameContext';
+import { withGameContext } from 'context/GameContext';
+import { withPlayerContext } from 'context/PlayerContext';
 
 import './Nickname.scss';
 
-export default class Nickname extends React.Component
+class Nickname extends React.Component
 {
+    state = {}
+
+    setNickname = name => this.setState({ name });
+
+    updateNickname = () => {
+        const {
+            game,
+            player,
+            history
+        } = this.props;
+
+        player.setName(this.state.name,
+            updated => game.updatePlayer(updated,
+                () => history.goBack()));
+    }
+
     render() {
-        const { history } = this.props;
+        const {
+            player,
+            history
+        } = this.props;
 
         return (
-            <GameConsumer>
-                { ({ player, update_player }) => (
-                    <div className='container'>
-                        <Menu
-                            title={
-                                <h1>Change nickname</h1>
-                            }
-                            content={
-                                <Textfield
-                                    onChange={ e => player.name = e.target.value }
-                                    onEnterPress={ e => player.save(() => update_player(() => history.goBack())) }
-                                    label='Nickname'
-                                    placeholder={ player.name }
-                                    autoFocus
-                                    topGutter
-                                />
-                            }
-                            actions={
-                                <React.Fragment>
-                                    <Button
-                                        onClick={ e => player.save(() => {
-                                            update_player(() => history.goBack())
-                                        }) }
-                                        verticalGutters
-                                        fullWidth
-                                        type='success'
-                                    >
-                                        Confirm
-                                    </Button>
-                                <Button
-                                    onClick={ e => history.goBack() }
-                                    fullWidth
-                                    type='error'
-                                >
-                                    Cancel
-                                </Button>
-                            </React.Fragment>
-                            }
+            <div className='container'>
+                <Menu
+                    title={<h1>Change nickname</h1>}
+
+                    content={
+                        <Textfield
+                            label='Nickname'
+                            id='nickname'
+
+                            onChange={e => this.setNickname(e.target.value)}
+                            onEnterPress={e => this.updateNickname()}
+                            placeholder={player.name}
+
+                            autoFocus
+                            topGutter
                         />
-                    </div>
-                )}
-            </GameConsumer>
+                    }
+
+                    actions={
+                        <React.Fragment>
+                            <Button
+                                onClick={e => this.updateNickname()}
+                                verticalGutters
+                                fullWidth
+                                type='success'
+                            >
+                                Confirm
+                            </Button>
+                            <Button
+                                onClick={e => history.goBack()}
+                                fullWidth
+                                type='error'
+                            >
+                                Cancel
+                            </Button>
+                    </React.Fragment>
+                    }
+                />
+            </div>
         )
     }
 }
+
+export default withGameContext(withPlayerContext(Nickname));

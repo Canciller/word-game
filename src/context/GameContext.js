@@ -1,64 +1,59 @@
 import React from 'react';
 import _ from 'underscore'
 
-import server from 'server';
-
-import Player from './Player';
-import Lobby from './Lobby';
+import { emit, on } from 'server';
 
 let GameContext  = React.createContext();
 
 class GameProvider extends React.Component
 {
-    _onChange = (object, callback) => this.setState({ object }, () => {
-        if(_.isFunction(callback)) callback();
-    });
+    state = {}
 
-    state = {
-        player: new Player(this._onChange),
-        lobby: new Lobby(this._onChange),
-        gamestate: {}
+    deleteState = () => {
+        let state = this.state;
+
+        const keys = Object.keys(state);
+        for(let i = 0; i < keys.length; ++i)
+            delete state[keys[i]]
+
+        this.setState(state);
     }
 
-    create = callback => this._emit('game:create', callback);
+    updateState = (error, state, callback) => {
+        const callable = _.isFunction(callback);
 
-    join = callback => this._emit('game:join', callback);
-
-    update_player =  callback => this._emit('game:update:player', callback);
-
-    _on(event, callback) {
-        server.on(event, data => {
-            if(_.isFunction(callback)) callback(data);
-        });
+        if(error) return callable ? callback(error, null) : undefined;
+        this.setState(state, () => callback ? callback(null, state) : undefined);
     }
 
-    _emit(event, callback) {
-        const {
-            player,
-            lobby
-        } = this.state;
+    createLobby = (player, lobby, callback) => emit(
+        'game:create:lobby',
+        player, lobby,
+        (error, state) => this.updateState(error, state, callback));
 
-        server.emit(event, { player, lobby }, ({ error, ...gamestate }) => {
-            const callbackWrapper = () => {
-                if(_.isFunction(callback)) callback(error, gamestate);
-            }
+    joinLobby = (player, lobby, callback) => emit(
+        'game:join:lobby',
+        player, lobby,
+        (error, state) => this.updateState(error, state, callback));
 
-            if(error) callbackWrapper();
-            else this.setState({ gamestate }, callbackWrapper);
-        });
-    }
+    updatePlayer = (player, callback) => emit(
+        'game:update:player',
+        player,
+        (error, state) => this.updateState(error, state, callback));
 
     componentDidMount() {
-        this._on('game:state', gamestate => this.setState({ gamestate }));
+        on('game:update', this.updateState);
+        on('connect', this.deleteState);
     }
 
     render() {
         return (
             <GameContext.Provider value={{
-                create: this.create,
-                join: this.join,
-                update_player: this.update_player,
-                ...this.state
+                createLobby: this.createLobby,
+                joinLobby: this.joinLobby,
+                updatePlayer: this.updatePlayer,
+                togglePlayerReady: this.togglePlayerReady,
+                state: this.state
             }}>
                 { this.props.children }
             </GameContext.Provider>
@@ -66,11 +61,24 @@ class GameProvider extends React.Component
     }
 }
 
+const withGameContext = Component => {
+    return props => {
+        return (
+            <GameContext.Consumer>
+                {context => {
+                    return <Component {...props} game={context} />;
+                }}
+            </GameContext.Consumer>
+        );
+    };
+};
+
 let GameConsumer = GameContext.Consumer;
 
 export {
     GameProvider,
-    GameConsumer
+    GameConsumer,
+    withGameContext
 }
 
 export default GameContext;
