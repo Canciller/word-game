@@ -27,6 +27,20 @@
             .Button {
                 padding: 80px 0;
                 background: white;
+                position: relative;
+
+                .LobbySettings-gamemode-votes {
+                    position: absolute;
+                    bottom: $spacing;
+                    right: $spacing;
+
+                    font-size: 0.8em;
+                    font-weight: bold;
+                }
+            }
+
+            .LobbySettings-gamemode-voted {
+                border-color: $foreground-color;
             }
         }
     }
@@ -118,6 +132,10 @@
         .LobbySettings-player-you {
             text-decoration: underline;
             font-weight: bold;
+        }
+
+        .LobbySettings-player-ready {
+            background: $green-color;
         }
     }
 }

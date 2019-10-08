@@ -24,6 +24,7 @@ class Button extends React.Component
             className,
             type, fullWidth,
             autoFocus,
+            disabled,
             topGutter,
             bottomGutter,
             verticalGutters,
@@ -41,8 +42,10 @@ class Button extends React.Component
                         { 'Button-fullWidth' : fullWidth },
                         { 'Button-topGutter' : topGutter },
                         { 'Button-bottomGutter' : bottomGutter },
-                        { 'Button-verticalGutters' : verticalGutters }
+                        { 'Button-verticalGutters' : verticalGutters },
+                        { 'Button-disabled' : disabled }
                     )}
+                disabled={disabled}
                 ref={this.button}
                 {...other}
             >

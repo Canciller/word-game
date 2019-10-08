@@ -63,6 +63,7 @@ class LobbyJoin extends React.Component
                                 id='lobby-password'
                                 label='Lobby password'
                                 type='password'
+                                placeholder='No password'
                             >
                             </TextField>
                         </React.Fragment>

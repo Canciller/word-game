@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'underscore'
 
 import { emit, on } from 'server';
+import gamemodes from 'gamemodes';
 
 let GameContext  = React.createContext();
 
@@ -10,6 +11,7 @@ class GameProvider extends React.Component
     state = {}
 
     deleteState = () => {
+        /*
         let state = this.state;
 
         const keys = Object.keys(state);
@@ -17,6 +19,14 @@ class GameProvider extends React.Component
             delete state[keys[i]]
 
         this.setState(state);
+        */
+
+        this.setState({
+            player: undefined,
+            lobby: undefined,
+            gamemodeVoted: undefined,
+            votes: {}
+        });
     }
 
     updateState = (error, state, callback) => {
@@ -26,23 +36,44 @@ class GameProvider extends React.Component
         this.setState(state, () => callback ? callback(null, state) : undefined);
     }
 
-    createLobby = (player, lobby, callback) => emit(
+    createLobby = (playerData, lobbyData, callback) => emit(
         'game:create:lobby',
-        player, lobby,
-        (error, state) => this.updateState(error, state, callback));
+        playerData, lobbyData,
+        (error, state) => this.updateState(error, state, callback)
+    );
 
-    joinLobby = (player, lobby, callback) => emit(
+    joinLobby = (playerData, lobbyData, callback) => emit(
         'game:join:lobby',
-        player, lobby,
-        (error, state) => this.updateState(error, state, callback));
+        playerData, lobbyData,
+        (error, state) => this.updateState(error, state, callback)
+    );
 
-    updatePlayer = (player, callback) => emit(
+    updatePlayer = (playerData, callback) => emit(
         'game:update:player',
-        player,
-        (error, state) => this.updateState(error, state, callback));
+        playerData,
+        (error, state) => this.updateState(error, state, callback)
+    );
+
+    startGame = () => {
+
+    }
+
+    gamemodeVote = (mode, callback) => emit(
+        'game:gamemode:vote',
+        mode,
+        (error, state) => this.updateState(error, state, callback)
+    );
+
+    togglePlayerReady = () => {
+        let player = this.state.player;
+        player.ready = !player.ready;
+        this.updatePlayer(player);
+    }
 
     componentDidMount() {
         on('game:update', this.updateState);
+        on('game:start', this.startGame);
+
         on('connect', this.deleteState);
     }
 
@@ -52,8 +83,11 @@ class GameProvider extends React.Component
                 createLobby: this.createLobby,
                 joinLobby: this.joinLobby,
                 updatePlayer: this.updatePlayer,
+                gamemodeVote: this.gamemodeVote,
                 togglePlayerReady: this.togglePlayerReady,
-                state: this.state
+                state: this.state,
+                gamemodes: gamemodes,
+                ...this.state
             }}>
                 { this.props.children }
             </GameContext.Provider>

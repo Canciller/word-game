@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import withCompleteContext from 'helpers/withCompleteContext';
+import { withGameContext } from 'context/GameContext';
 
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
@@ -20,11 +20,11 @@ class LobbySettings extends React.Component
         } = this.props;
 
         const {
-            currentLobby,
-            currentPlayer
-        } = game.state;
+            lobby,
+            player
+        } = game;
 
-        if(!currentPlayer || !currentLobby) history.push('/lobby');
+        if(!player || !lobby) history.push('/lobby');
     }
 
     componentDidMount() {
@@ -37,30 +37,44 @@ class LobbySettings extends React.Component
 
     render() {
         const {
-            player,
             game
         } = this.props;
 
         const {
-            currentLobby,
-            currentPlayer
-        } = game.state;
+            lobby,
+            player,
+            gamemodeVoted,
+            votes,
+            gamemodes,
+        } = game;
 
-        if(!currentPlayer || !currentLobby) return <React.Fragment />
+        if(!player || !lobby) return <React.Fragment />
 
-        const players = currentLobby.players;
+        const players = lobby.players;
 
         return (
             <div className='container LobbySettings'>
                 <div className='LobbySettings-left'>
                     <div className='LobbySettings-gamemode'>
                         <div className='LobbySettings-gamemode-grid'>
-                            <Button>
-                                Word Bidding
-                            </Button>
-                            <Button>
-                                Word Poker
-                            </Button>
+                            {gamemodes &&
+                                gamemodes.map(mode => (
+                                    <Button
+                                        className={classNames({
+                                            'LobbySettings-gamemode-voted' : gamemodeVoted === mode
+                                        })}
+                                        onClick={e => game.gamemodeVote(mode)}
+                                        key={mode}
+                                    >
+                                        {mode}
+                                        {votes[mode] &&
+                                            <div className='LobbySettings-gamemode-votes'>
+                                                {votes[mode]}
+                                            </div>
+                                        }
+                                    </Button>
+                                ))
+                            }
                         </div>
                     </div>
                     <div className='LobbySettings-extra'>
@@ -68,11 +82,11 @@ class LobbySettings extends React.Component
                             <IconButton name='cog' />
                             <IconButton name='question' />
                         </div>
-                        { currentLobby.name && currentLobby.code &&
+                        { lobby.name && lobby.code &&
                             <div className='LobbySettings-info'>
                                 <h1>
-                                    <p>{currentLobby.name}</p>
-                                    <span>#{currentLobby.code}</span>
+                                    <p>{lobby.name}</p>
+                                    <span>#{lobby.code}</span>
                                 </h1>
                             </div>
                         }
@@ -88,14 +102,16 @@ class LobbySettings extends React.Component
                                 ready,
                             } = players[playerId];
 
-                            const isCurrentPlayer = playerId === currentPlayer.id;
+                            const isCurrentPlayer = playerId === player.id;
 
                             return (
                                 <Button
                                     key={playerId}
                                     onClick={e => isCurrentPlayer && this.changeNickname()}
+                                    type={ready ? 'success' : undefined }
                                     className={classNames(
                                         { 'LobbySettings-player-you' : isCurrentPlayer },
+                                        { 'LobbySettings-player-ready' : ready },
                                         'LobbySettings-player'
                                     )}
                                 >
@@ -113,11 +129,11 @@ class LobbySettings extends React.Component
                     </div>
                     <div className='LobbySettings-confirm'>
                         <Button
-                            onClick={e => player.setReady(!currentPlayer.ready, updated => game.updatePlayer(updated))}
-                            type={currentPlayer.ready ? 'error' : 'success'}
+                            onClick={e => game.togglePlayerReady() }
+                            type={player.ready ? 'error' : 'success'}
                             fullWidth
                         >
-                            {currentPlayer.ready ? 'Not Ready' : 'Ready'}
+                            {player.ready ? 'Not Ready' : 'Ready'}
                         </Button>
                     </div>
                 </div>
@@ -126,4 +142,4 @@ class LobbySettings extends React.Component
     }
 }
 
-export default withCompleteContext(LobbySettings);
+export default withGameContext(LobbySettings);

@@ -6,7 +6,7 @@
     text-decoration: none;
     border: $border;
 
-    &:focus, &:hover {
+    &:hover {
         border-color: $foreground-color;
     }
 
@@ -56,4 +56,11 @@
 
 .Button-bottomGutter {
     margin-bottom: $vertical-margin;
+}
+
+.Button-disabled {
+    background: $border-color;
+    border-color: $border-color;
+    pointer-events: none;
+    @include cursor(default);
 }
